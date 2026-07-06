@@ -1,6 +1,3 @@
-$(info === DIAG2 CThread anywhere: $(shell find / -name CThread.h 2>/dev/null | head -3) ===)
-$(info === DIAG2 libutilswut.a: $(shell find / -name 'libutilswut*' 2>/dev/null | head -3) ===)
-$(info === DIAG2 any libutils hdr: $(shell find / -path '*libutils*' 2>/dev/null | head -8) ===)
 # Compiling the projects with libutils logging code?
 DO_LOGGING          := 1
 
@@ -58,10 +55,10 @@ LIBS                := -lwups -lutilswut -lcoreinit -lturbojpeg -lgx2 -lvpad -ln
 # example: 
 # -L$C:/library1/lib
 #---------------------------------------------------------------------------------
-EXTERNAL_LIBPATHS   := 
+EXTERNAL_LIBPATHS   := -L/lib
                         
 #---------------------------------------------------------------------------------
 # Will be added to the final include paths
 # -IC:/library1/include
 #---------------------------------------------------------------------------------
-EXTERNAL_INCLUDE    := -I$(WUT_ROOT)/include/libutilswut
+EXTERNAL_INCLUDE    := -I/include/libutilswut
