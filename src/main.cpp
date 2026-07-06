@@ -1,5 +1,5 @@
 #include <wups.h>
-#include <nsysnet/socket.h>
+#include <nsysnet/_socket.h>
 #include <utils/logger.h>
 #include "retain_vars.hpp"
 #include "EncodingHelper.h"
