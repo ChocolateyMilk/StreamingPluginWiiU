@@ -1,6 +1,5 @@
-#include <map>
-#include <string>
 #include <wups.h>
+#include <nsysnet/socket.h>
 #include <utils/logger.h>
 #include "retain_vars.hpp"
 #include "EncodingHelper.h"
@@ -14,8 +13,13 @@ WUPS_PLUGIN_VERSION("v0.1");
 WUPS_PLUGIN_AUTHOR("Maschell, ItsOmey");
 WUPS_PLUGIN_LICENSE("GPL");
 
-// Something is using "write"...
-WUPS_FS_ACCESS()
+WUPS_USE_WUT_DEVOPTAB();
+
+static void startStreaming() {
+    EncodingHelper::destroyInstance();
+    EncodingHelper::getInstance()->StartAsyncThread();
+    EncodingHelper::getInstance()->setMJPEGStreamServer(HeartBeatServer::getInstance()->getMJPEGServer());
+}
 
 // Gets called once the loader exists.
 INITIALIZE_PLUGIN() {
@@ -24,22 +28,24 @@ INITIALIZE_PLUGIN() {
 }
 
 // Called whenever an application was started.
-ON_APPLICATION_START(my_args) {
+ON_APPLICATION_START() {
     socket_lib_init();
     log_init();
 
-    gAppStatus = WUPS_APP_STATUS_FOREGROUND;
-
-    EncodingHelper::destroyInstance();
-    EncodingHelper::getInstance()->StartAsyncThread();
-    EncodingHelper::getInstance()->setMJPEGStreamServer(HeartBeatServer::getInstance()->getMJPEGServer());
+    gAppStatus = APP_STATUS_FOREGROUND;
+    startStreaming();
 }
 
-ON_APP_STATUS_CHANGED(status) {
-    gAppStatus = status;
+ON_ACQUIRED_FOREGROUND() {
+    gAppStatus = APP_STATUS_FOREGROUND;
+}
 
-    if (status == WUPS_APP_STATUS_CLOSED) {
-        EncodingHelper::destroyInstance();
-        HeartBeatServer::destroyInstance();
-    }
+ON_RELEASE_FOREGROUND() {
+    gAppStatus = APP_STATUS_BACKGROUND;
+}
+
+ON_APPLICATION_ENDS() {
+    gAppStatus = APP_STATUS_BACKGROUND;
+    EncodingHelper::destroyInstance();
+    HeartBeatServer::destroyInstance();
 }

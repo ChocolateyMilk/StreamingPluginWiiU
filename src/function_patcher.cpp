@@ -8,7 +8,7 @@
 uint32_t count = 0;
 
 DECL_FUNCTION(void, GX2CopyColorBufferToScanBuffer, const GX2ColorBuffer *colorBuffer, int32_t scan_target) {
-    if(gAppStatus == WUPS_APP_STATUS_FOREGROUND) {
+    if(gAppStatus == APP_STATUS_FOREGROUND) {
         int32_t use_scan_target = 4;
         if(gScreen == WUPS_STREAMING_SCREEN_TV){
             use_scan_target = 1;

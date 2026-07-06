@@ -11,7 +11,9 @@
 #define WUPS_STREAMING_RESOLUTION_360P 2
 #define WUPS_STREAMING_RESOLUTION_480P 3
 
-extern wups_loader_app_status_t gAppStatus;
+#define APP_STATUS_BACKGROUND 0
+#define APP_STATUS_FOREGROUND 1
+extern int32_t gAppStatus;
 extern int32_t gScreen;
 extern int32_t gResolution;
 extern int32_t gSendPriority;
