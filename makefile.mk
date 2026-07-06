@@ -1,3 +1,7 @@
+$(info === LIBDIAG coreinit: $(shell find / -name libcoreinit.a 2>/dev/null | head -2) ===)
+$(info === LIBDIAG wutnewlib: $(shell find / -name libwutnewlib.a 2>/dev/null | head -2) ===)
+$(info === LIBDIAG wut.a: $(shell find / -name libwut.a 2>/dev/null | head -2) ===)
+$(info === LIBDIAG wutlibdir contents: $(shell ls /opt/devkitpro/wut/lib 2>/dev/null | head -25) ===)
 # Compiling the projects with libutils logging code?
 DO_LOGGING          := 1
 
